@@ -1,0 +1,45 @@
+/* Start <=====> Global Styles <=====> */
+* {
+  padding: 0;
+  margin: 0;
+  body {
+    direction: rtl;
+    font-family: $regular_font;
+  }
+  ul {
+    list-style: none;
+  }
+  a {
+    text-decoration: none;
+    color: var(--dark);
+  }
+}
+
+/* End   <=====> Global Styles <=====> */
+
+/* Start <=====> Container Style <=====> */
+.container {
+  padding: 0 6rem;
+  margin: 0 6rem;
+
+  @media (max-width: 1280px) {
+    padding: 0 4rem;
+    margin: 0 4rem;
+  }
+
+  @media (max-width: 992px) {
+    padding: 0 3rem;
+    margin: 0 3rem;
+  }
+
+  @media (max-width: 640px) {
+    padding: 0 2rem;
+    margin: 0 2rem;
+  }
+
+  @media (max-width: 480px) {
+    padding: 0 1rem;
+    margin: 0;
+  }
+}
+/* End   <=====> Container Style <=====> */
