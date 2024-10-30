@@ -1,20 +1,27 @@
 <template>
+  <MainLoader v-if="isLoading" />
   <footer class="footer_content">
     <div class="footer_content_container container">
       <div class="footer_content_top">
         <Logo />
         <div class="footer_content_top_links">
-          <ul>
-            <li v-for="navLink in navLinksFooterOne" :key="navLink.id">
-              <nuxt-link :to="navLink.path">
-                {{ navLink.title }}
+          <ul v-if="categories && Object.keys(categories).length">
+            <li
+              v-for="[key, category] in Object.entries(categories).slice(0, 6)"
+              :key="category.id"
+            >
+              <nuxt-link :to="`/${category.slug}/${category.id}`">
+                {{ category.name }}
               </nuxt-link>
             </li>
           </ul>
           <ul>
-            <li v-for="navLink in navLinksFooterTow" :key="navLink.id">
-              <nuxt-link :to="navLink.path">
-                {{ navLink.title }}
+            <li
+              v-for="[key, category] in Object.entries(categories).slice(6)"
+              :key="category.id"
+            >
+              <nuxt-link :to="`/${category.slug}/${category.id}`">
+                {{ category.name }}
               </nuxt-link>
             </li>
           </ul>
@@ -41,88 +48,49 @@
 </template>
 
 <script setup lang="ts">
+/* ############################ Start :: Imports ############################### */
 import Logo from "./main/Logo.vue";
+import MainLoader from "./main/MainLoader.vue";
 import SocialGroup from "./main/SocialGroup.vue";
-import { computed } from "vue";
-const navLinksFooterOne = computed(function () {
-  const navLinks = [
-    {
-      id: 1,
-      title: "موضة",
-      path: "/fashion",
-    },
-    {
-      id: 2,
-      title: "جمال",
-      path: "##",
-    },
-    {
-      id: 3,
-      title: "رشاقة",
-      path: "##",
-    },
-    {
-      id: 4,
-      title: "صحة بدنية",
-      path: "##",
-    },
-    {
-      id: 5,
-      title: "سلام نفسي",
-      path: "##",
-    },
-    {
-      id: 6,
-      title: "حكايات بنات ",
-      path: "##",
-    },
-  ];
-  return navLinks;
-});
-const navLinksFooterTow = computed(function () {
-  const navLinks = [
-    {
-      id: 7,
-      title: "علاقات صحية",
-      path: "##",
-    },
-    {
-      id: 8,
-      title: "أمومة",
-      path: "##",
-    },
-    {
-      id: 9,
-      title: "منزل وديكور",
-      path: "##",
-    },
-    {
-      id: 10,
-      title: "طبخ",
-      path: "##",
-    },
-    {
-      id: 11,
-      title: "مواهبكن",
-      path: "##",
-    },
-  ];
-  return navLinks;
-});
+import { computed, onMounted, ref } from "vue";
+/* ############################ End :: Imports ############################### */
+const isLoading = ref(true);
+const categories = ref({});
+/* ############################ Start :: Consts ############################### */
+const { $axiosRequest } = useNuxtApp();
+
+/* ############################ Start :: Consts ############################### */
+async function getCategoriesData() {
+  try {
+    const res = await $axiosRequest.get(`HomeArticles`);
+    if (res.status >= 200 && res.status < 300) {
+      categories.value = res.data.categories;
+      isLoading.value = false;
+    }
+  } catch (error) {
+    console.log("Error ===>", error);
+  }
+}
+/* ############################ End :: Get Category Data Request ############################### */
+
 const navLinksFooterThree = computed(function () {
   const navLinks = [
     {
       id: 12,
       title: "سياسة الخصوصية",
-      path: "##",
+      path: "/سياسة-الخصوصية",
     },
     {
       id: 13,
       title: "الشروط والأحكام",
-      path: "##",
+      path: "/الشروط-والأحكام",
     },
   ];
   return navLinks;
+});
+
+onMounted(() => {
+  getCategoriesData();
 });
 </script>
 
@@ -142,6 +110,7 @@ const navLinksFooterThree = computed(function () {
 
         ul {
           @include flex(center, center, column, 10px);
+          list-style: none;
           li {
             a {
               display: block;

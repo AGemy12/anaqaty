@@ -1,80 +1,65 @@
 <template>
-  <ul class="app_header_content_navbar">
-    <li v-for="navLink in navLinksHandler" :key="navLink.id">
-      <nuxt-link :to="navLink.path">
-        {{ navLink.title }}
+  <ul
+    class="app_header_content_navbar"
+    v-if="categories && Object.keys(categories).length"
+  >
+    <li
+      v-for="[key, category] in Object.entries(categories)"
+      :key="category.id"
+      @click="selectCategory(category.id)"
+    >
+      <nuxt-link
+        :to="`/${category.slug}/${category.id}`"
+        @click="handleEventClick"
+      >
+        {{ category.name }}
       </nuxt-link>
     </li>
   </ul>
 </template>
 
-<script setup lang="ts">
-import { computed } from "vue";
-const navLinksHandler = computed(function () {
-  const navLinks = [
-    {
-      id: 1,
-      title: "موضة",
-      path: "/fashion",
-    },
-    {
-      id: 2,
-      title: "جمال",
-      path: "##",
-    },
-    {
-      id: 3,
-      title: "رشاقة",
-      path: "##",
-    },
-    {
-      id: 4,
-      title: "صحة بدنية",
-      path: "##",
-    },
-    {
-      id: 5,
-      title: "سلام نفسي",
-      path: "##",
-    },
-    {
-      id: 6,
-      title: "حكايات بنات ",
-      path: "##",
-    },
-    {
-      id: 7,
-      title: "علاقات صحية",
-      path: "##",
-    },
-    {
-      id: 8,
-      title: "أمومة",
-      path: "##",
-    },
-    {
-      id: 9,
-      title: "منزل وديكور",
-      path: "##",
-    },
-    {
-      id: 10,
-      title: "طبخ",
-      path: "##",
-    },
-    {
-      id: 11,
-      title: "مواهبكن",
-      path: "##",
-    },
-  ];
-  return navLinks;
+<script setup>
+/* <==============> Start ::Imports <==============> */
+
+import { useMenuButtonStore } from "~/stores/menuButton";
+/* <==============> End ::Imports <==============> */
+
+/* <==============> Start ::Consts <==============> */
+
+const { $axiosRequest } = useNuxtApp();
+const categories = ref({});
+const menuToggler = useMenuButtonStore();
+
+/* <==============> End ::Consts <==============> */
+
+/* <==============> Start :: Categories Data Get Req <==============> */
+async function getCategories() {
+  try {
+    let res = await $axiosRequest.get("HomeArticles");
+    categories.value = res.data.categories;
+    // console.log(categories.value);
+  } catch (error) {
+    console.log("Erro ===>", error);
+  }
+}
+
+/* <==============> End :: Categories Data Get Req <==============> */
+
+const handleEventClick = () => {
+  if (menuToggler.isOpen) {
+    menuToggler.isOpen = !menuToggler.isOpen;
+  }
+};
+
+onMounted(() => {
+  getCategories();
 });
 </script>
 
 <style lang="scss">
 .app_header_content_navbar {
   @include flex(space-between, center);
+  list-style: none;
   li {
     a {
       display: block;

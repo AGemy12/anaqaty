@@ -9,26 +9,95 @@
       <NavLinks />
     </div>
   </header>
+  <div class="scroll_nav" ref="scrollNav">
+    <div class="scroll_nav_content container">
+      <Logo />
+      <NavLinks />
+      <MenuBars />
+    </div>
+  </div>
   <Menu />
 </template>
 
-<script setup lang="ts">
+<script setup>
+import { onMounted, onUnmounted, ref } from "vue";
+
 import Logo from "./main/Logo.vue";
 import Menu from "./main/Menu.vue";
 import NavLinks from "./main/NavLinks.vue";
 import SocialGroup from "./main/SocialGroup.vue";
 import MenuBars from "./mini/MenuBars.vue";
+
+const scrollNav = ref(null);
+
+const handleScroll = () => {
+  if (window.scrollY >= 300) {
+    scrollNav.value.style.height = "70px";
+  } else {
+    scrollNav.value.style.height = "0";
+  }
+};
+
+onMounted(() => {
+  window.addEventListener("scroll", handleScroll);
+});
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .app_header {
   background-color: var(--white);
   padding: 2rem 0;
 
   .app_header_content {
+    z-index: 100;
+
     .app_header_content_top_header {
       @include flex(space-between, center, row);
       padding-bottom: 2rem;
+    }
+  }
+}
+
+.scroll_nav {
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 99;
+  height: 0;
+  transition: var(--main_transition);
+  box-shadow: var(--shadow);
+  background-color: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(5px);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .scroll_nav_content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    .app_header_logo {
+      width: 90px !important;
+      flex-shrink: 0;
+    }
+    .app_header_content_navbar {
+      gap: 10px !important;
+
+      li {
+        a {
+          font-size: 14px !important;
+          @media (max-width: 992px) {
+            font-size: 12px !important;
+          }
+        }
+      }
+    }
+    .app_header_content_top_header_bars {
+      display: none;
+      @media (max-width: 768px) {
+        display: flex;
+      }
     }
   }
 }

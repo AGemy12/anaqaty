@@ -12,7 +12,7 @@
 </template>
 
 <script setup>
-import { useMenuButtonStore } from "@/stores/menuButton";
+import { useMenuButtonStore } from "~/stores/menuButton";
 import Logo from "./Logo.vue";
 import NavLinks from "./NavLinks.vue";
 import SocialGroup from "./SocialGroup.vue";

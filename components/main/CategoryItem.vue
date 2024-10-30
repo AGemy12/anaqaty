@@ -1,16 +1,17 @@
 <template>
   <div class="category_item">
-    <nuxt-link class="category_item_image_link" :to="eventPath">
-      <div class="category_item_img">
-        <img :src="categoryItemImg" :alt="categoryItemImgAlt" />
-      </div>
-    </nuxt-link>
+    <!-- <nuxt-link class="category_item_image_link" :to="topicLink">
+      
+    </nuxt-link> -->
+    <div class="category_item_img">
+      <img :src="topicImage" :alt="topicImageALt" />
+    </div>
     <div class="category_item_info">
       <nuxt-link class="category_item_category_link" :to="categoryPath">
-        {{ categoryItemType }}
+        {{ categoryType }}
       </nuxt-link>
-      <nuxt-link class="category_item_info_link" :to="eventPath">
-        {{ eventTitle }}
+      <nuxt-link class="category_item_info_link" :to="topicLink">
+        {{ topicHeadTitle }}
       </nuxt-link>
     </div>
   </div>
@@ -19,55 +20,61 @@
 <script setup>
 defineProps({
   categoryItemImg: {
-    String,
+    type: String,
   },
-  categoryItemImgAlt: {
-    String,
+  topicImage: {
+    type: String,
   },
-  categoryItemType: {
-    String,
+  topicImageALt: {
+    type: String,
   },
-  eventPath: {
-    String,
+  categoryType: {
+    type: String,
   },
-  categoryPathLink: {
-    String,
+  topicLink: {
+    type: String,
   },
-  eventTitle: {
-    String,
+  categoryPath: {
+    type: String,
+  },
+  topicHeadTitle: {
+    type: String,
   },
 });
 </script>
 
 <style lang="scss">
 .category_item {
-  background-color: var(--white);
+  background-color: var(--alt_color);
   border-radius: var(--sm_border_rd);
   box-shadow: var(--shadow);
   overflow: hidden;
-  .category_item_image_link {
+  flex-shrink: 0;
+  /* .category_item_image_link {
     display: block;
-    .category_item_img {
-      @include flex(center, center);
-      img {
-        width: 100%;
-      }
+   
+  }*/
+  .category_item_img {
+    @include flex(center, center);
+    img {
+      width: 100%;
     }
   }
   .category_item_info {
     padding: 1rem;
     text-align: justify;
-
+    min-height: 80px;
+    @include flex(center, flex-start, column);
     .category_item_category_link {
       display: block;
       width: fit-content;
       color: #686666;
-      font-size: 0.8rem;
       font-weight: bold;
       transition: color var(--main_transition);
     }
     .category_item_info_link {
       margin: 0 0.5rem;
+      font-size: 1.1rem;
       display: block;
       transition: color var(--main_transition);
     }

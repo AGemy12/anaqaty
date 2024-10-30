@@ -12,9 +12,10 @@ defineProps({
 
 <style lang="scss">
 .category_title {
-  width: fit-content;
-  margin: 3rem auto;
+  width: 100%;
+  margin: 3rem 0 3rem auto;
   padding: 5px 20px;
+  text-align: right;
   position: relative;
   &::before {
     content: "";
@@ -22,14 +23,6 @@ defineProps({
     background-color: var(--dark);
     width: 100%;
     height: 2px;
-  }
-  &::after {
-    content: "";
-    @include absoluteBottom(-4px, 50%, -50%);
-    background-color: var(--dark);
-    width: 10px;
-    height: 10px;
-    transform: translateX(-50%) rotate(45deg) !important;
   }
 }
 </style>

@@ -10,7 +10,7 @@
 </template>
 
 <script setup>
-import { useMenuButtonStore } from "@/stores/menuButton";
+import { useMenuButtonStore } from "~/stores/menuButton";
 const menuToggler = useMenuButtonStore();
 </script>
 

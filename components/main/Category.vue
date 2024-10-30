@@ -5,11 +5,18 @@
       <CategoryItem
         v-for="item in categoryDetails"
         :key="item.id"
-        :categoryItemImg="item.image"
-        :categoryPathLink="item.image"
-        :eventPath="item.image"
-        :eventTitle="item.title"
-        :categoryItemType="item.category"
+        :topicImage="item.image_path"
+        :topicImageAlt="item.topicImageAlt"
+        :topicLink="`/${item.category ? item.category.name : categorySlug}/${
+          item.id
+        }/${item.slug}`"
+        :topicHeadTitle="item.title"
+        :categoryType="categoryType"
+        :categoryPath="
+          item.category
+            ? `/${item.category.name}/${item.category.id}`
+            : categoryPath
+        "
       />
     </div>
   </section>
@@ -18,6 +25,7 @@
 <script setup>
 import CategoryTitle from "../mini/CategoryTitle.vue";
 import CategoryItem from "./CategoryItem.vue";
+import { useRoute } from "vue-router";
 
 defineProps({
   homePage: {
@@ -31,11 +39,26 @@ defineProps({
     type: Array,
     default: [],
   },
+  categoryType: {
+    type: String,
+  },
+  categoryPath: {
+    type: String,
+  },
+  categorySlug: {
+    type: String,
+  },
+  fireClickHandle: {
+    type: Function,
+  },
 });
+
+onMounted(() => {});
 </script>
 
 <style lang="scss">
 .category_container {
+  overflow: hidden;
   .category_content {
     @include grid(300px, 20px);
   }

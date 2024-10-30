@@ -1,22 +1,21 @@
 <template>
   <div class="article_section_container">
     <div class="article_section">
-      <img
-        src="https://anaqati.b-cdn.net/wp-content/uploads/2024/09/0876.webp"
-        alt=""
-      />
+      <img :src="mainImgSrc" alt="" />
       <div class="article_head_title" v-if="withArticleTitle">
         <nuxt-link :to="catPath"> {{ catTitle }} </nuxt-link>
-        <h1>{{ mainHead }}</h1>
+        <h2>{{ mainHead }}</h2>
         <span> {{ articleDate }} </span>
       </div>
     </div>
-    <p v-if="hasParagraph">{{ articleSectionPara }}</p>
+    <div class="article_body" v-html="cleanedArticleBody"></div>
   </div>
 </template>
 
 <script setup>
-defineProps({
+import { computed } from "vue";
+
+const props = defineProps({
   withArticleTitle: {
     type: Boolean,
   },
@@ -34,13 +33,19 @@ defineProps({
     type: String,
     required: true,
   },
-  articleSectionPara: {
+  articleBody: {
     type: String,
-  },
-  hasParagraph: {
-    type: Boolean,
     required: true,
   },
+  mainImgSrc: {
+    type: String,
+  },
+});
+
+const cleanedArticleBody = computed(() => {
+  return props.articleBody
+    ? props.articleBody.replace(/<p>&nbsp;<\/p>/g, "").trim()
+    : "";
 });
 </script>
 
@@ -55,13 +60,13 @@ defineProps({
     overflow: hidden;
     div.article_head_title {
       position: absolute;
-      bottom: 0px;
-      background-color: rgba(0, 0, 0, 0.8);
+      top: 0px;
+      background-color: rgba(0, 0, 0, 0.7);
       width: 100%;
       min-height: 80px;
       padding: 1rem;
       @include flex(center, flex-start, column, 5px);
-      h1 {
+      h2 {
         text-align: justify;
         font-size: 1.2rem;
         font-weight: bold;
@@ -91,7 +96,7 @@ defineProps({
       }
       @media (max-width: 768px) {
         padding: 0.5rem;
-        h1 {
+        h2 {
           font-size: 0.8rem;
         }
         a {
@@ -106,7 +111,7 @@ defineProps({
       @media (max-width: 480px) {
         padding: 0.5rem;
         gap: 2.5px;
-        h1 {
+        h2 {
           font-size: 0.6rem;
         }
         a {
@@ -126,6 +131,16 @@ defineProps({
     line-height: 2;
     @media (max-width: 450px) {
       font-size: 1rem;
+    }
+  }
+  .article_body {
+    p,
+    li {
+      font-size: 1rem;
+      line-height: 2;
+      text-align: justify;
+      margin-top: 0.5rem;
+      margin-bottom: 0;
     }
   }
 }

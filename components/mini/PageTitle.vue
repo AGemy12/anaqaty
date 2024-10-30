@@ -15,8 +15,11 @@ h1 {
   padding: 0.5rem 2rem;
   color: var(--dark);
   border-radius: var(--sm_border_rd);
-  cursor: default;
   position: relative;
+  cursor: default;
+  @media (max-width: 480px) {
+    font-size: 1.2rem;
+  }
   &::after,
   &::before {
     content: "";
