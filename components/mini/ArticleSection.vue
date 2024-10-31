@@ -4,7 +4,7 @@
       <img :src="mainImgSrc" alt="" />
       <div class="article_head_title" v-if="withArticleTitle">
         <nuxt-link :to="catPath"> {{ catTitle }} </nuxt-link>
-        <h2>{{ mainHead }}</h2>
+        <h1>{{ mainHead }}</h1>
         <span> {{ articleDate }} </span>
       </div>
     </div>
@@ -66,7 +66,7 @@ const cleanedArticleBody = computed(() => {
       min-height: 80px;
       padding: 1rem;
       @include flex(center, flex-start, column, 5px);
-      h2 {
+      h1 {
         text-align: justify;
         font-size: 1.2rem;
         font-weight: bold;
@@ -96,7 +96,7 @@ const cleanedArticleBody = computed(() => {
       }
       @media (max-width: 768px) {
         padding: 0.5rem;
-        h2 {
+        h1 {
           font-size: 0.8rem;
         }
         a {
@@ -124,6 +124,7 @@ const cleanedArticleBody = computed(() => {
       }
     }
   }
+  /*
   p {
     margin: 1.5rem 0;
     font-size: 1.3rem;
@@ -143,5 +144,6 @@ const cleanedArticleBody = computed(() => {
       margin-bottom: 0;
     }
   }
+    */
 }
 </style>

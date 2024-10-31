@@ -171,5 +171,46 @@ onMounted(() => {
       display: block;
     }
   }
+  .article_body {
+    padding: 1em;
+    a {
+      text-decoration: underline;
+      color: blue;
+    }
+    p {
+      margin: 1em 0;
+      text-align: justify;
+      line-height: 2;
+    }
+    ul {
+      margin: 0.5rem auto 0.5rem 0;
+      width: 90%;
+      li {
+        position: relative;
+        display: flex;
+        line-height: 2;
+        &::before {
+          content: "";
+          position: absolute;
+          right: -15px;
+          top: 15px;
+          width: 6px;
+          height: 6px;
+          border-radius: 50%;
+          background-color: #000;
+        }
+        span {
+          margin: 0 15px 0 0;
+          text-align: justify;
+        }
+      }
+    }
+
+    .image img {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 1/1 !important;
+    }
+  }
 }
 </style>
