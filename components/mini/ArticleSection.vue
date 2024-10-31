@@ -111,7 +111,7 @@ const cleanedArticleBody = computed(() => {
       @media (max-width: 480px) {
         padding: 0.5rem;
         gap: 2.5px;
-        h2 {
+        h1 {
           font-size: 0.6rem;
         }
         a {
