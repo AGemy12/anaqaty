@@ -208,6 +208,8 @@ onMounted(() => {
 
     .image img {
       width: 100%;
+      box-shadow: var(--shadow);
+      border-radius: var(--md_border_rd);
       height: auto;
       aspect-ratio: 1/1 !important;
     }

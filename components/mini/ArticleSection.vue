@@ -43,9 +43,16 @@ const props = defineProps({
 });
 
 const cleanedArticleBody = computed(() => {
-  return props.articleBody
-    ? props.articleBody.replace(/<p>&nbsp;<\/p>/g, "").trim()
-    : "";
+  if (!props.articleBody) return "";
+
+  return props.articleBody.replace(/<img(.*?)\/?>/g, (match, attributes) => {
+    // استخراج قيمة alt من خصائص الصورة
+    const altMatch = attributes.match(/alt="(.*?)"/);
+    const altText = altMatch ? altMatch[1] : "";
+
+    // إضافة title بنفس قيمة alt وإضافة span كوصف
+    return `<img ${attributes} title="${altText}" /><span class="image-description">${altText}</span>`;
+  });
 });
 </script>
 
@@ -123,6 +130,13 @@ const cleanedArticleBody = computed(() => {
         }
       }
     }
+  }
+  .image-description {
+    display: block;
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    color: #666;
+    text-align: center;
   }
   /*
   p {
